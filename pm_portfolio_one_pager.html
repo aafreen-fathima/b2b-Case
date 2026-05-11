@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F2EB;
+    --ink: #1A1714;
+    --accent: #D4500A;
+    --muted: #8A8480;
+    --rule: #D6D0C8;
+    --tag-bg: #EAE6DE;
+    --green: #2E6B4F;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .header {
+    border-top: 3px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding: 20px 0 16px;
+    margin-bottom: 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .meta {
+    text-align: right;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .section {
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.45s ease forwards;
+  }
+
+  .section:last-child { border-bottom: none; }
+  .section:nth-child(1) { animation-delay: 0.05s; }
+  .section:nth-child(2) { animation-delay: 0.12s; }
+  .section:nth-child(3) { animation-delay: 0.19s; }
+  .section:nth-child(4) { animation-delay: 0.26s; }
+  .section:nth-child(5) { animation-delay: 0.33s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .section-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    min-width: 24px;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  p { color: #3A3632; margin-bottom: 10px; }
+  p:last-child { margin-bottom: 0; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tag {
+    background: var(--tag-bg);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 3px 9px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+  .tag.hot { background: #FDF0E8; border-color: #EAB88A; color: var(--accent); }
+
+  .pain-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0;
+  }
+  .pain-label { font-size: 11px; color: var(--muted); min-width: 120px; }
+  .pain-bar { flex: 1; height: 6px; background: var(--rule); border-radius: 1px; overflow: hidden; }
+  .pain-fill { height: 100%; background: var(--accent); border-radius: 1px; }
+
+  /* DECISION BOX — light bg, dark text, high contrast */
+  .decision-box {
+    border: 2px solid var(--accent);
+    padding: 18px 20px;
+    margin-top: 14px;
+    background: #FDF0E8;
+  }
+  .decision-box .decision-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 600;
+  }
+  .decision-box p { color: #2A1F1A; }
+
+  .v1-box {
+    border-left: 3px solid var(--green);
+    padding: 12px 16px;
+    margin-top: 14px;
+    background: #F0F5F2;
+  }
+  .v1-box .v1-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+
+  .why-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .why-table th {
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 8px 8px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .why-table td {
+    padding: 8px 8px 8px 0;
+    font-size: 12px;
+    color: #3A3632;
+    vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+  }
+  .why-table tr:last-child td { border-bottom: none; }
+  .why-table td:first-child { color: var(--ink); min-width: 130px; }
+  .x { color: #C0392B; }
+
+  .hypothesis {
+    background: #FDF8F0;
+    border: 1px solid #EAE0CC;
+    padding: 14px 16px;
+    margin-top: 10px;
+    font-style: italic;
+    color: #5A4E44;
+    font-size: 12px;
+  }
+  .hypothesis strong {
+    font-style: normal;
+    color: var(--ink);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="label">PM Portfolio · Problem Brief</div>
+    <h1>The Idle Equipment<br><span>Sharing Problem</span></h1>
+  </div>
+  <div class="meta">
+    May 2026<br>
+    B2B · Physical World<br>
+    Small Business Owners
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>Problem Discovery</h2>
+  </div>
+  <p>Small producers (food makers, woodworkers, candle makers) often own expensive equipment that sits idle 50–60% of the time. They can't afford it full-time alone, but have no trusted, lightweight way to share it with another local business.</p>
+  <p>To validate, I'd interview 8–10 small business owners in dense urban markets (Montreal, Portland, Austin) — specifically those who rent commercial kitchen or studio space, or who've considered buying equipment with someone else.</p>
+  <div class="tags">
+    <span class="tag hot">Discovery interviews</span>
+    <span class="tag">Farmers market communities</span>
+    <span class="tag">Facebook small biz groups</span>
+    <span class="tag">Etsy / cottage food forums</span>
+  </div>
+  <p style="margin-top:12px; font-size:12px; color: var(--muted);">Key questions: <em>Have you ever shared equipment or considered it? Where did it break down? What would make you trust a near-stranger with your space?</em></p>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Problem Sizing</h2>
+  </div>
+  <p>This is a <strong>painkiller, not a vitamin</strong> — but only for a specific trigger event: when a solo owner is deciding whether to buy a piece of equipment they can't fully justify alone.</p>
+  <div class="pain-row">
+    <span class="pain-label">Frequency of pain</span>
+    <div class="pain-bar"><div class="pain-fill" style="width:45%"></div></div>
+    <span style="font-size:11px; color:var(--muted)">Low–Med</span>
+  </div>
+  <div class="pain-row">
+    <span class="pain-label">Intensity when felt</span>
+    <div class="pain-bar"><div class="pain-fill" style="width:82%"></div></div>
+    <span style="font-size:11px; color:var(--muted)">High</span>
+  </div>
+  <div class="pain-row">
+    <span class="pain-label">Willingness to pay</span>
+    <div class="pain-bar"><div class="pain-fill" style="width:58%"></div></div>
+    <span style="font-size:11px; color:var(--muted)">Medium</span>
+  </div>
+  <p style="margin-top:12px;">US alone has ~33M small businesses. The addressable slice — those with costly shared-use equipment needs in urban clusters — is likely in the low hundreds of thousands. Small TAM, but <strong>high urgency within it</strong>.</p>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Why Is This Still Unsolved?</h2>
+  </div>
+  <table class="why-table">
+    <tr>
+      <th>Existing solution</th>
+      <th>Why it falls short</th>
+    </tr>
+    <tr>
+      <td>Commercial kitchen rentals</td>
+      <td><span class="x">✕</span> Expensive, inflexible, impersonal — no ownership upside</td>
+    </tr>
+    <tr>
+      <td>Peer-to-peer rental apps</td>
+      <td><span class="x">✕</span> Built for consumer goods, not ongoing B2B co-use with cost-sharing</td>
+    </tr>
+    <tr>
+      <td>Informal text/email arrangement</td>
+      <td><span class="x">✕</span> Breaks down on scheduling conflicts, maintenance splits, liability</td>
+    </tr>
+    <tr>
+      <td>Maker spaces / co-ops</td>
+      <td><span class="x">✕</span> Monthly fees, limited equipment types, not industry-specific</td>
+    </tr>
+  </table>
+  <div class="hypothesis">
+    <strong>My hypothesis</strong>
+    The real blocker isn't finding a partner — it's the absence of a lightweight "paper trail" layer: a shared schedule, a cost-split agreement, and a damage protocol. The coordination overhead makes people default to doing nothing.
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Build · Partner · Kill Decision</h2>
+  </div>
+  <p>Before committing to build, I'd want evidence on three questions:</p>
+  <div class="tags" style="margin-bottom: 12px;">
+    <span class="tag hot">Do 5+ people say "I'd pay for this right now"?</span>
+    <span class="tag hot">Does the trust/liability problem have a simple legal workaround?</span>
+    <span class="tag hot">Can matching work at local density?</span>
+  </div>
+  <p>If matching requires critical mass (chicken-and-egg), a <strong>partner play</strong> makes more sense — embed this as a feature inside an existing small biz community rather than building standalone.</p>
+  <div class="decision-box">
+    <div class="decision-label">Provisional call</div>
+    <p>Build a lean v0 as a manual concierge (Google Form + templated agreement PDF) to validate willingness to pay before any product investment. Kill if 20 outreach attempts yield fewer than 3 paying matches.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>If We Build: V1 Scope</h2>
+  </div>
+  <p>Ruthlessly scoped to the one moment that matters: <strong>two businesses deciding to share a piece of equipment for the first time.</strong></p>
+  <div class="v1-box">
+    <div class="v1-label">V1 in one sentence</div>
+    <p>A shared scheduling link + auto-generated cost-split and damage agreement, purpose-built for two small businesses co-using one piece of equipment — no app download, no account required.</p>
+  </div>
+  <div class="tags" style="margin-top:14px;">
+    <span class="tag">Out of scope: matching/discovery</span>
+    <span class="tag">Out of scope: payments</span>
+    <span class="tag">Out of scope: multi-party (3+ businesses)</span>
+  </div>
+</div>
+
+</body>
+</html>
