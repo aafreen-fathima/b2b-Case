@@ -1,4 +1,5 @@
 Link : https://aafreen-fathima.github.io/b2b-Case/ 
+
 The Idle Equipment Sharing Problem
 
 A product exploration focused on helping small businesses share expensive equipment without the operational headaches.
